@@ -1,0 +1,17 @@
+declare cursor states is
+select
+    state_name
+from
+    demo_states;
+
+begin htp.p('<div class="mytree-container">');
+
+for i In states loop htp.p('<li>' || i.state_name || '</li>');
+
+end Loop;
+
+htp.p('</ul>');
+
+htp.p('</div>');
+
+end;

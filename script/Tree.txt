@@ -1,0 +1,25 @@
+select
+    *
+from
+    (
+        select
+            null as parent,
+            'All Categories' as id,
+            'All Categories' as name
+        from
+            demo_product_info
+        union
+        select
+            'All Categories' as parent,
+            category as id,
+            category as name
+        from
+            demo_product_info
+        union
+        select
+            category as parent,
+            to_char(product_id) as id,
+            product_name as name
+        from
+            demo_product_info
+    ) start with parent is null connect by prior id = parent
