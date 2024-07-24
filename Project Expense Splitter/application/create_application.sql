@@ -8,7 +8,7 @@ wwv_flow_imp.component_begin (
 ,p_release=>'24.1.2'
 ,p_default_workspace_id=>5175876941333495070
 ,p_default_application_id=>85645
-,p_default_id_offset=>0
+,p_default_id_offset=>17965199062259326442
 ,p_default_owner=>'WKSP_APEXXEPDB1'
 );
 wwv_imp_workspace.create_flow(
@@ -29,7 +29,7 @@ wwv_imp_workspace.create_flow(
 ,p_timestamp_tz_format=>'DS'
 ,p_direction_right_to_left=>'N'
 ,p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,'')
-,p_authentication_id=>wwv_flow_imp.id(17848569259340560357)
+,p_authentication_id=>wwv_flow_imp.id(35813768321599886799)
 ,p_application_tab_set=>1
 ,p_logo_type=>'T'
 ,p_logo_text=>'Expense Splitter'

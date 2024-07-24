@@ -5,17 +5,17 @@ wwv_flow_imp.component_begin (
 ,p_release=>'24.1.2'
 ,p_default_workspace_id=>5175876941333495070
 ,p_default_application_id=>85645
-,p_default_id_offset=>0
+,p_default_id_offset=>17965199062259326442
 ,p_default_owner=>'WKSP_APEXXEPDB1'
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848564682633560354)
+ p_id=>wwv_flow_imp.id(35813763744892886796)
 ,p_plugin_type=>'DYNAMIC ACTION'
 ,p_plugin=>'NATIVE_OPEN_AI_ASSISTANT'
 ,p_version_scn=>15547532014657
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848564971065560354)
+ p_id=>wwv_flow_imp.id(35813764033324886796)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_COLOR_PICKER'
 ,p_attribute_01=>'FULL'
@@ -23,7 +23,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014684
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848565224067560354)
+ p_id=>wwv_flow_imp.id(35813764286326886796)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_DATE_PICKER_APEX'
 ,p_attribute_01=>'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON'
@@ -33,7 +33,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014703
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848565699976560354)
+ p_id=>wwv_flow_imp.id(35813764762235886796)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_GEOCODED_ADDRESS'
 ,p_attribute_01=>'RELAX_HOUSE_NUMBER'
@@ -44,14 +44,14 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014718
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848566132763560355)
+ p_id=>wwv_flow_imp.id(35813765195022886797)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_SELECT_MANY'
 ,p_attribute_01=>'separated'
 ,p_version_scn=>15547532014728
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848566517256560355)
+ p_id=>wwv_flow_imp.id(35813765579515886797)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_SINGLE_CHECKBOX'
 ,p_attribute_01=>'Y'
@@ -59,7 +59,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014738
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848566867954560355)
+ p_id=>wwv_flow_imp.id(35813765930213886797)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_STAR_RATING'
 ,p_attribute_01=>'fa-star'
@@ -67,7 +67,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014755
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848567144688560355)
+ p_id=>wwv_flow_imp.id(35813766206947886797)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_YES_NO'
 ,p_attribute_01=>'Y'
@@ -76,14 +76,14 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014775
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848567456087560355)
+ p_id=>wwv_flow_imp.id(35813766518346886797)
 ,p_plugin_type=>'PROCESS TYPE'
 ,p_plugin=>'NATIVE_GEOCODING'
 ,p_attribute_01=>'RELAX_HOUSE_NUMBER'
 ,p_version_scn=>15547532014778
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848567768311560356)
+ p_id=>wwv_flow_imp.id(35813766830570886798)
 ,p_plugin_type=>'REGION TYPE'
 ,p_plugin=>'NATIVE_DISPLAY_SELECTOR'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -91,7 +91,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014781
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848568067586560356)
+ p_id=>wwv_flow_imp.id(35813767129845886798)
 ,p_plugin_type=>'REGION TYPE'
 ,p_plugin=>'NATIVE_IR'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -99,7 +99,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014787
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848568314556560356)
+ p_id=>wwv_flow_imp.id(35813767376815886798)
 ,p_plugin_type=>'REGION TYPE'
 ,p_plugin=>'NATIVE_MAP_REGION'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -107,7 +107,7 @@ wwv_flow_imp_shared.create_plugin_setting(
 ,p_version_scn=>15547532014795
 );
 wwv_flow_imp_shared.create_plugin_setting(
- p_id=>wwv_flow_imp.id(17848568648053560356)
+ p_id=>wwv_flow_imp.id(35813767710312886798)
 ,p_plugin_type=>'WEB SOURCE TYPE'
 ,p_plugin=>'NATIVE_ADFBC'
 ,p_version_scn=>15547532014802

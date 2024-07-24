@@ -8,7 +8,7 @@ wwv_flow_imp.component_begin (
 ,p_release=>'24.1.2'
 ,p_default_workspace_id=>5175876941333495070
 ,p_default_application_id=>85645
-,p_default_id_offset=>0
+,p_default_id_offset=>17965199062259326442
 ,p_default_owner=>'WKSP_APEXXEPDB1'
 );
 wwv_flow_imp.g_varchar2_table := wwv_flow_imp.empty_varchar2_table;
@@ -47,7 +47,7 @@ wwv_flow_imp.g_varchar2_table(32) := '8295A10A000043030BB7780A00009E4EB032540100
 wwv_flow_imp.g_varchar2_table(33) := 'D0C0C22D9E020080A713AC0C550000181A58B8C5530000F0748295A10A000043030BB7780A00009E4EB032540100606860E1164F0100C0D30956862A00000C0D2CDCE2290000783AC1CA50050080A181855B3C0500004F275819AA00003034B0708BA700';
 wwv_flow_imp.g_varchar2_table(34) := '00E0E9042B431500008606166EF11400003C9D6065A80200C0D0C0C22D9E020080A713AC0C55E0FF649530EA9A339CB10000000049454E44AE426082';
 wwv_flow_imp_shared.create_app_static_file(
- p_id=>wwv_flow_imp.id(17848864548279560573)
+ p_id=>wwv_flow_imp.id(35814063610538887015)
 ,p_file_name=>'icons/app-icon-192.png'
 ,p_mime_type=>'image/png'
 ,p_file_charset=>'utf-8'

@@ -1,0 +1,167 @@
+--------------------Form Initialization-----------------------------------
+SELECT
+    e.expense_id,
+    e.expense_name,
+    e.category,
+    e.amount,
+    e.transaction_date,
+    e.notes
+FROM
+    d_expenses e
+WHERE
+    e.expense_id =:p4_expense_id;
+ 
+ ---------------------Group Members Select List-----------------------------
+
+SELECT
+    user_name AS d,
+    user_id AS r
+FROM
+    d_users
+WHERE
+    user_id IN (
+        SELECT
+            user_id
+        FROM
+            d_user_details
+        WHERE
+            group_id =:p4_group_id
+    );
+	
+ ---------Source--------------
+ 
+ --Payer
+SELECT
+    user_name AS d,
+    user_id AS r
+FROM
+    d_users
+WHERE
+    user_id IN (
+        SELECT
+            user_id
+        FROM
+            d_user_details
+        WHERE
+            group_id =:p4_group_id
+    );
+
+--Members Included
+IF
+    :p4_expense_id IS NOT NULL
+THEN
+    SELECT
+        listagg(borrowing_user_id,':')
+    INTO
+        :p4_included_members
+    FROM
+        d_amount_details
+    WHERE
+            expense_id =:p4_expense_id
+        AND
+            group_id =:p4_group_id;
+
+    RETURN :p4_included_members;
+END IF;
+
+RETURN NULL;
+ 
+ ------------------------Add Expense----------------------------------------
+
+DECLARE
+    l_selected   apex_t_varchar2;
+    l_count      NUMBER;
+BEGIN
+    INSERT INTO d_expenses (
+        expense_id,
+        expense_name,
+        category,
+        amount,
+        transaction_date,
+        notes,
+        group_id
+    ) VALUES (
+        expense_id_seq.NEXTVAL,
+        :p4_expense_name,
+        :p4_category,
+        :p4_amount,
+        :p4_transaction_date,
+        :p4_notes,
+        :p4_group_id
+    ) RETURNING expense_id INTO :p4_expense_id;
+
+    l_selected := apex_string.split(:p4_included_members,':');
+    l_count := l_selected.count;
+    FOR i IN 1..l_selected.count LOOP
+        INSERT INTO d_amount_details (
+            amt_det_id,
+            group_id,
+            expense_id,
+            borrowing_user_id,
+            borrowing_amount,
+            lending_user_id,
+            lending_amount
+        ) VALUES (
+            amt_det_id_seq.NEXTVAL,
+            :p4_group_id,
+            :p4_expense_id,
+            l_selected(i),
+            :p4_amount / l_count,
+            :p4_payer,
+            :p4_amount / l_count
+        );
+
+    END LOOP;
+
+END;    
+
+------------------------------Update Expense-------------------------------------
+
+DECLARE
+    l_selected   apex_t_varchar2;
+    l_count      NUMBER;
+BEGIN
+    UPDATE d_expenses
+        SET
+            expense_name =:p4_expense_name,
+            category =:p4_category,
+            amount =:p4_amount,
+            transaction_date =:p4_transaction_date,
+            notes =:p4_notes
+    WHERE
+        expense_id =:p4_expense_id;
+
+    l_selected := apex_string.split(:p4_included_members,':');
+    DELETE FROM d_amount_details WHERE
+        expense_id =:p4_expense_id;
+
+    l_count := l_selected.count;
+    FOR i IN 1..l_selected.count LOOP
+        INSERT INTO d_amount_details (
+            amt_det_id,
+            group_id,
+            expense_id,
+            borrowing_user_id,
+            borrowing_amount,
+            lending_user_id,
+            lending_amount
+        ) VALUES (
+            amt_det_id_seq.NEXTVAL,
+            :p4_group_id,
+            :p4_expense_id,
+            l_selected(i),
+            :p4_amount / l_count,
+            :p4_payer,
+            :p4_amount / l_count
+        );
+
+    END LOOP;
+
+END;
+
+----------------------------------Category-------------------------------------------
+Food and Drink - https://icons.iconarchive.com/icons/aha-soft/desktop-buffet/16/Steak-icon.png
+Home and Utilities - https://icons.iconarchive.com/icons/apathae/chakram-2/16/Home-icon.png
+Transportation - https://icons.iconarchive.com/icons/iconshow/transport/16/Sportscar-car-icon.png
+Entertainment - https://icons.iconarchive.com/icons/wwalczyszyn/android-style-honeycomb/16/Music-icon.png
+Other - https://icons.iconarchive.com/icons/awicons/vista-artistic/16/coin-add-icon.png
