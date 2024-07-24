@@ -1,0 +1,37 @@
+DECLARE
+    l_user_id    d_users.user_id%TYPE;
+    l_group_id   d_groups.group_id%TYPE;
+BEGIN
+    SELECT
+        user_id
+    INTO
+        l_user_id
+    FROM
+        d_users
+    WHERE
+        user_name =:app_user;
+
+    INSERT INTO d_groups (
+        group_id,
+        group_name,
+        category,
+        description
+    ) VALUES (
+        group_id_seq.NEXTVAL,
+        :p2_group_name,
+        :p2_category,
+        :p2_description
+    ) RETURNING group_id INTO l_group_id;
+
+    INSERT INTO d_user_details ( usr_det_id,group_id,user_id ) VALUES (
+        usr_det_id_seq.NEXTVAL,
+        l_group_id,
+        l_user_id
+    );
+
+END;
+
+------------------------------Category------------------------------------
+Apartment - https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/24/Actions-go-home-icon.png
+Trip - https://icons.iconarchive.com/icons/google/noto-emoji-travel-places/16/42549-taxi-icon.png
+Other - https://icons.iconarchive.com/icons/hopstarter/soft-scraps/16/User-Group-icon.png

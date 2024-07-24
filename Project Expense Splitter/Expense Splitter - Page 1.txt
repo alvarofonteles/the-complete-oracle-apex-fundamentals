@@ -1,0 +1,70 @@
+---------------------------Prerendering--------------------------------------
+DECLARE
+    l_user_id   NUMBER;
+BEGIN
+    SELECT
+        nvl(
+            MAX(user_id),
+            -1
+        )
+    INTO
+        l_user_id
+    FROM
+        d_users
+    WHERE
+        user_name =:app_user;
+
+    IF
+        l_user_id =-1
+    THEN
+        INSERT INTO d_users (
+            user_id,
+            first_name,
+            last_name,
+            user_name,
+            email_address
+        ) SELECT
+            user_id_seq.NEXTVAL,
+            awpu.first_name,
+            awpu.last_name,
+            awpu.user_name,
+            lower(awpu.email)
+        FROM
+            apex_workspace_apex_users awpu
+        WHERE
+            user_name =:app_user;
+
+    END IF;
+
+END;
+
+-------------------------------------Report---------------------------------------
+
+SELECT
+    g.group_id,
+    g.group_name,
+    g.category,
+    g.description
+FROM
+    d_groups g
+WHERE
+    g.group_id IN (
+        SELECT
+            group_id
+        FROM
+            d_user_details
+        WHERE
+            user_id = (
+                SELECT
+                    user_id
+                FROM
+                    d_users
+                WHERE
+                    user_name =:app_user
+            )
+    );
+
+-----------------------------------------CSS--------------------------------------
+img {
+    padding-right:8px;
+}
