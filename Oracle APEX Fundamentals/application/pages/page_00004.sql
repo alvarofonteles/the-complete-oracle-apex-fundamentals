@@ -332,6 +332,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_imp.id(15764289146442617395)
 ,p_plug_display_sequence=>60
+,p_include_in_reg_disp_sel_yn=>'Y'
 ,p_plug_display_point=>'SUB_REGIONS'
 ,p_location=>null
 ,p_plug_source_type=>'NATIVE_URL'

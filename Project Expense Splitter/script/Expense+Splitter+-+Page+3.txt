@@ -1,0 +1,10 @@
+------------------------Prerendering-----------------------------------------------------
+SELECT group_name
+  INTO :p3_group_name
+  FROM d_groups
+ WHERE group_id = :p3_group_id;
+------------------------Report-----------------------------------------------------------
+SELECT expense_id, expense_name, category, amount, group_id FROM d_expenses 
+WHERE expense_id IN ( SELECT expense_id FROM d_expenses WHERE group_id = :p3_group_id );
+------------------------CSS--------------------------------------------------------------
+img { padding-right:8px; }

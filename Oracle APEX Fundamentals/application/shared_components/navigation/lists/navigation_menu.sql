@@ -15,7 +15,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(15763986033751617342)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15546002276077
+,p_version_scn=>15546523672343
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15764488357684617571)
@@ -29,8 +29,9 @@ wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15764607255213624152)
 ,p_list_item_display_sequence=>20
 ,p_list_item_link_text=>'Demo Report'
-,p_list_item_link_target=>'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_link_target=>'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-table-pointer'
+,p_parent_list_item_id=>wwv_flow_imp.id(15764488357684617571)
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'2,3'
 );
@@ -38,10 +39,21 @@ wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15774757939630562322)
 ,p_list_item_display_sequence=>30
 ,p_list_item_link_text=>'Regions'
-,p_list_item_link_target=>'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_link_target=>'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-file-o'
+,p_parent_list_item_id=>wwv_flow_imp.id(15764488357684617571)
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'4'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(16471520445638612871)
+,p_list_item_display_sequence=>40
+,p_list_item_link_text=>'Load'
+,p_list_item_link_target=>'f?p=&APP_ID.:13:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-database-arrow-up'
+,p_parent_list_item_id=>wwv_flow_imp.id(15764488357684617571)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'13'
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15764504088009617586)

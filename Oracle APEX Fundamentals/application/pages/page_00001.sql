@@ -23,6 +23,18 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'13'
 );
 wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(15731089079885181933)
+,p_plug_name=>'Dashboard '
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#:t-Cards--basic:t-Cards--displayIcons:t-Cards--3cols:t-Cards--animColorFill'
+,p_plug_template=>wwv_flow_imp.id(15764289146442617395)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_list_id=>wwv_flow_imp.id(16453108473577278702)
+,p_plug_source_type=>'NATIVE_LIST'
+,p_list_template_id=>wwv_flow_imp.id(15764338514451617420)
+);
+wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(15764489586545617572)
 ,p_plug_name=>'Oracle APEX Fundamentals'
 ,p_region_template_options=>'#DEFAULT#'

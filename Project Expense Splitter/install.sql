@@ -6,7 +6,6 @@ prompt --install
 @@application/shared_components/navigation/lists/navigation_menu.sql
 @@application/shared_components/navigation/lists/navigation_bar.sql
 @@application/shared_components/navigation/lists/user_interface.sql
-@@application/shared_components/navigation/lists/dashboard.sql
 @@application/shared_components/navigation/listentry.sql
 @@application/shared_components/files/icons_app_icon_32_png.sql
 @@application/shared_components/files/icons_app_icon_144_rounded_png.sql
@@ -112,17 +111,11 @@ prompt --install
 @@application/shared_components/plugins/template_component/theme_42_content_row.sql
 @@application/shared_components/plugins/template_component/theme_42_media_list.sql
 @@application/shared_components/plugins/template_component/theme_42_timeline.sql
-@@application/shared_components/data_loads/data_load_india_state.sql
 @@application/user_interfaces/combined_files.sql
 @@application/pages/page_00000.sql
 @@application/pages/page_00001.sql
 @@application/pages/page_00002.sql
-@@application/pages/page_00003.sql
-@@application/pages/page_00004.sql
-@@application/pages/page_00013.sql
 @@application/pages/page_09999.sql
 @@application/pages/page_10000.sql
 @@application/pages/page_10010.sql
-@@application/pages/page_10020.sql
-@@application/pages/page_10021.sql
 @@application/end_environment.sql
