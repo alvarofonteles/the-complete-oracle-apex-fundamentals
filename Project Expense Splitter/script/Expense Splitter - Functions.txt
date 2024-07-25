@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION get_user_name ( p_user_id   IN d_users.user_id%TYPE ) RETURN VARCHAR2 IS
+    l_user_name   VARCHAR2(30);
+BEGIN
+    SELECT
+        user_name
+    INTO
+        l_user_name
+    FROM
+        d_users
+    WHERE
+        user_id = p_user_id;
+
+    RETURN l_user_name;
+END get_user_name;

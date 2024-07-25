@@ -67,6 +67,8 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'Add Expense'
 ,p_button_position=>'CREATE'
+,p_button_condition=>'P4_EXPENSE_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(15764888194837371303)
@@ -251,8 +253,7 @@ wwv_flow_imp_page.create_page_item(
 '            d_user_details',
 '        WHERE',
 '            group_id =:p4_group_id',
-'    );'))
-,p_lov_display_null=>'YES'
+'    );    '))
 ,p_cSize=>30
 ,p_field_template=>wwv_flow_imp.id(35813944328863886887)
 ,p_item_template_options=>'#DEFAULT#'
@@ -320,6 +321,7 @@ wwv_flow_imp_page.create_page_process(
 'END;   '))
 ,p_process_clob_language=>'PLSQL'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(17970114812312204713)
 ,p_internal_uid=>17970114900632204714
 );
 wwv_flow_imp_page.create_page_process(

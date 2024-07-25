@@ -1,0 +1,15 @@
+---------------------------Report--------------------------------------
+SELECT
+    user_name,
+    email_address
+FROM
+    d_users u
+WHERE
+    user_id IN (
+        SELECT
+            user_id
+        FROM
+            d_user_details
+        WHERE
+            group_id =:p6_group_id
+    );

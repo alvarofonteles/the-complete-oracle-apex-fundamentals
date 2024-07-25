@@ -1,0 +1,32 @@
+----------------------Group Members Select List-----------------------------
+SELECT
+    user_name AS d,
+    user_id AS r
+FROM
+    d_users u
+WHERE
+    user_id NOT IN (
+        SELECT
+            user_id
+        FROM
+            d_user_details
+        WHERE
+            group_id =:p7_group_id
+    );
+
+---------------------------Add Members-----------------------------------------
+
+DECLARE
+    l_selected   apex_t_varchar2;
+BEGIN
+    l_selected := apex_string.split(:p7_members,':');
+    FOR i IN 1..l_selected.count LOOP
+        INSERT INTO d_user_details ( usr_det_id,group_id,user_id ) VALUES (
+            usr_det_id_seq.NEXTVAL,
+            :p7_group_id,
+            l_selected(i)
+        );
+
+    END LOOP;
+
+END;
