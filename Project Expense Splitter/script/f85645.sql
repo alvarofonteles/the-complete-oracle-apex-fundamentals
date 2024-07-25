@@ -33,16 +33,16 @@ prompt APPLICATION 85645 - Expense Splitter
 -- Application Export:
 --   Application:     85645
 --   Name:            Expense Splitter
---   Date and Time:   13:05 Thursday July 25, 2024
+--   Date and Time:   21:40 Thursday July 25, 2024
 --   Exported By:     ALVAROFONTELES@HOTMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                      9
---       Items:                   23
---       Processes:               12
---       Regions:                 17
---       Buttons:                  7
---       Dynamic Actions:          2
+--     Pages:                     11
+--       Items:                   27
+--       Processes:               17
+--       Regions:                 20
+--       Buttons:                 13
+--       Dynamic Actions:          5
 --     Shared Components:
 --       Logic:
 --         Build Options:          2
@@ -18284,8 +18284,21 @@ wwv_flow_imp_page.create_page_plug(
 ,p_menu_template_id=>wwv_flow_imp.id(35813948368288886889)
 );
 wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970116402144204729)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
+,p_button_name=>'VIEW_MEMBERES'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#:t-Button--link'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'View Members'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::P6_GROUP_ID,P6_GROUP_NAME:&P3_GROUP_ID.,&P3_GROUP_NAME.'
+);
+wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(17970113669609204701)
-,p_button_sequence=>30
+,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
 ,p_button_name=>'ADD_EXPENSE'
 ,p_button_action=>'REDIRECT_PAGE'
@@ -18311,6 +18324,26 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_plug_id=>wwv_flow_imp.id(15731090400390181947)
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(18449029197939147402)
+,p_name=>'DIALOG_CLOSED'
+,p_event_sequence=>10
+,p_triggering_element_type=>'JQUERY_SELECTOR'
+,p_triggering_element=>'body'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(18449029202934147403)
+,p_event_id=>wwv_flow_imp.id(18449029197939147402)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(15731090400390181947)
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(15731090511865181948)
@@ -18366,10 +18399,11 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(17970114704884204712)
 ,p_plug_name=>'Button Footer'
+,p_parent_plug_id=>wwv_flow_imp.id(17970113701993204702)
 ,p_region_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_imp.id(35813808758363886820)
 ,p_plug_display_sequence=>20
-,p_plug_display_point=>'REGION_POSITION_03'
+,p_plug_display_point=>'SUB_REGIONS'
 ,p_location=>null
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'expand_shortcuts', 'N',
@@ -18377,7 +18411,7 @@ wwv_flow_imp_page.create_page_plug(
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(17970114812312204713)
-,p_button_sequence=>10
+,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_imp.id(17970114704884204712)
 ,p_button_name=>'ADD_EXPENSE'
 ,p_button_action=>'SUBMIT'
@@ -18388,6 +18422,20 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_position=>'CREATE'
 ,p_button_condition=>'P4_EXPENSE_ID'
 ,p_button_condition_type=>'ITEM_IS_NULL'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970118349647204748)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(17970114704884204712)
+,p_button_name=>'UPDATE_EXPENSE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Update Expense'
+,p_button_position=>'EDIT'
+,p_button_condition=>'P4_EXPENSE_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(15764888194837371303)
@@ -18526,7 +18574,29 @@ wwv_flow_imp_page.create_page_item(
 ,p_is_required=>true
 ,p_item_sequence=>50
 ,p_item_plug_id=>wwv_flow_imp.id(17970113701993204702)
+,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Payer'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'IF',
+'    :p4_expense_id IS NOT NULL',
+'THEN',
+'    SELECT',
+'        lending_user_id',
+'    INTO',
+'        :p4_payer',
+'    FROM',
+'        d_amount_details',
+'    WHERE',
+'            expense_id = :p4_expense_id',
+'        AND',
+'            group_id = :p4_group_id;',
+'',
+'    RETURN :p4_payer;',
+'END IF;',
+'',
+'RETURN NULL;'))
+,p_source_type=>'FUNCTION_BODY'
+,p_source_language=>'PLSQL'
 ,p_display_as=>'NATIVE_SELECT_LIST'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
@@ -18556,7 +18626,29 @@ wwv_flow_imp_page.create_page_item(
 ,p_is_required=>true
 ,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_imp.id(17970113701993204702)
+,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Included Members'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'IF',
+'    :p4_expense_id IS NOT NULL',
+'THEN',
+'    SELECT',
+'        listagg(borrowing_user_id,'':'')',
+'    INTO',
+'        :p4_included_members',
+'    FROM',
+'        d_amount_details',
+'    WHERE',
+'            expense_id =:p4_expense_id',
+'        AND',
+'            group_id =:p4_group_id;',
+'',
+'    RETURN :p4_included_members;',
+'END IF;',
+'',
+'RETURN NULL;'))
+,p_source_type=>'FUNCTION_BODY'
+,p_source_language=>'PLSQL'
 ,p_display_as=>'NATIVE_POPUP_LOV'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
@@ -18642,6 +18734,69 @@ wwv_flow_imp_page.create_page_process(
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when_button_id=>wwv_flow_imp.id(17970114812312204713)
 ,p_internal_uid=>17970114900632204714
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970118400921204749)
+,p_process_sequence=>20
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Update Expense'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_selected   apex_t_varchar2;',
+'    l_count      NUMBER;',
+'BEGIN',
+'    UPDATE d_expenses',
+'        SET',
+'            expense_name =:p4_expense_name,',
+'            category =:p4_category,',
+'            amount =:p4_amount,',
+'            transaction_date =:p4_transaction_date,',
+'            notes =:p4_notes',
+'    WHERE',
+'        expense_id =:p4_expense_id;',
+'',
+'    l_selected := apex_string.split(:p4_included_members,'':'');',
+'    DELETE FROM d_amount_details WHERE',
+'        expense_id =:p4_expense_id;',
+'',
+'    l_count := l_selected.count;',
+'    FOR i IN 1..l_selected.count LOOP',
+'        INSERT INTO d_amount_details (',
+'            amt_det_id,',
+'            group_id,',
+'            expense_id,',
+'            borrowing_user_id,',
+'            borrowing_amount,',
+'            lending_user_id,',
+'            lending_amount',
+'        ) VALUES (',
+'            amt_det_id_seq.NEXTVAL,',
+'            :p4_group_id,',
+'            :p4_expense_id,',
+'            l_selected(i),',
+'            :p4_amount / l_count,',
+'            :p4_payer,',
+'            :p4_amount / l_count',
+'        );',
+'',
+'    END LOOP;',
+'',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(17970118349647204748)
+,p_internal_uid=>17970118400921204749
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970118578727204750)
+,p_process_sequence=>30
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_attribute_02=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>17970118578727204750
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(17970113837902204703)
@@ -18761,6 +18916,42 @@ wwv_flow_imp_page.create_page_plug(
 'END;'))
 ,p_plug_source_type=>'NATIVE_PLSQL'
 );
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970118202525204747)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(17970115866617204723)
+,p_button_name=>'DELETE_EXPENSE'
+,p_button_action=>'REDIRECT_URL'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Delete Expense'
+,p_button_position=>'CLOSE'
+,p_button_redirect_url=>'javascript: apex.confirm(''Are you sure you want to delete the expense?'', ''DELETE'');'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970118144842204746)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(17970115866617204723)
+,p_button_name=>'UPDATE_EXPENSE'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Update Expense'
+,p_button_position=>'CREATE'
+,p_button_redirect_url=>'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::P4_GROUP_ID,P4_EXPENSE_ID:&P5_GROUP_ID.,&P5_EXPENSE_ID.'
+);
+wwv_flow_imp_page.create_page_branch(
+ p_id=>wwv_flow_imp.id(18449029419440147405)
+,p_branch_name=>'Go To Page 3'
+,p_branch_action=>'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+,p_branch_point=>'AFTER_PROCESSING'
+,p_branch_type=>'REDIRECT_URL'
+,p_branch_sequence=>10
+,p_branch_condition_type=>'REQUEST_EQUALS_CONDITION'
+,p_branch_condition=>'DELETE'
+);
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(17970116165310204726)
 ,p_name=>'P5_EXPENSE_ID'
@@ -18784,6 +18975,258 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_plug_id=>wwv_flow_imp.id(17970115866617204723)
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(18450786345468469867)
+,p_name=>'DIALOG_CLOSED'
+,p_event_sequence=>10
+,p_triggering_element_type=>'JQUERY_SELECTOR'
+,p_triggering_element=>'body'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(18450786717766469868)
+,p_event_id=>wwv_flow_imp.id(18450786345468469867)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'window.location.reload();'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(18449029326678147404)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Delete Expense'
+,p_process_sql_clob=>'DELETE FROM d_expenses WHERE expense_id =:p5_expense_id;'
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'DELETE'
+,p_process_when_type=>'REQUEST_EQUALS_CONDITION'
+,p_internal_uid=>18449029326678147404
+);
+end;
+/
+prompt --application/pages/page_00006
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>6
+,p_name=>'Member'
+,p_alias=>'MEMBER'
+,p_step_title=>'Member'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'17'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(17970116592953204730)
+,p_plug_name=>'Member'
+,p_title=>'&P6_GROUP_NAME.'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>wwv_flow_imp.id(35813872844214886850)
+,p_plug_display_sequence=>10
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT',
+'    user_name,',
+'    email_address',
+'FROM',
+'    d_users u',
+'WHERE',
+'    user_id IN (',
+'        SELECT',
+'            user_id',
+'        FROM',
+'            d_user_details',
+'        WHERE',
+'            group_id =:p6_group_id',
+'    );'))
+,p_plug_source_type=>'NATIVE_JQM_LIST_VIEW'
+,p_plug_query_num_rows=>15
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'supplemental_info_column', 'EMAIL_ADDRESS',
+  'text_column', 'USER_NAME')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970116947418204734)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(17970116592953204730)
+,p_button_name=>'ADD_MEMBER'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Add Member'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:7:&SESSION.::&DEBUG.::P7_GROUP_ID:&P6_GROUP_ID.'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(17970116773312204732)
+,p_name=>'P6_GROUP_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(17970116592953204730)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(17970116894629204733)
+,p_name=>'P6_GROUP_NAME'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(17970116592953204730)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(17970117982903204744)
+,p_name=>'Dialog Closed'
+,p_event_sequence=>10
+,p_triggering_element_type=>'JQUERY_SELECTOR'
+,p_triggering_element=>'body'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(17970118087575204745)
+,p_event_id=>wwv_flow_imp.id(17970117982903204744)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(17970116592953204730)
+);
+end;
+/
+prompt --application/pages/page_00007
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>7
+,p_name=>'Add Member'
+,p_alias=>'ADD-MEMBER'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Add Member'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'16'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(17970117002593204735)
+,p_plug_name=>'Add Member'
+,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader js-removeLandmark:t-Region--noBorder:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_imp.id(35813872844214886850)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'HTML')).to_clob
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(17970117348645204738)
+,p_plug_name=>'Button Footer'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(35813808758363886820)
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_location=>null
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'HTML')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970117480181204739)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(17970117348645204738)
+,p_button_name=>'ADD_MEMBER'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Add Member'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(17970117166321204736)
+,p_name=>'P7_MEMBERS'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(17970117002593204735)
+,p_prompt=>'Members'
+,p_display_as=>'NATIVE_POPUP_LOV'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT',
+'    user_name AS d,',
+'    user_id AS r',
+'FROM',
+'    d_users u',
+'WHERE',
+'    user_id NOT IN (',
+'        SELECT',
+'            user_id',
+'        FROM',
+'            d_user_details',
+'        WHERE',
+'            group_id =:p7_group_id',
+'    );'))
+,p_lov_display_null=>'YES'
+,p_cSize=>30
+,p_field_template=>wwv_flow_imp.id(35813944328863886887)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'POPUP'
+,p_attribute_02=>'FIRST_ROWSET'
+,p_attribute_04=>'N'
+,p_attribute_05=>'Y'
+,p_attribute_06=>'0'
+,p_multi_value_type=>'SEPARATED'
+,p_multi_value_separator=>':'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(17970117271827204737)
+,p_name=>'P7_GROUP_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(17970117002593204735)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970117516904204740)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Add Member'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_selected   apex_t_varchar2;',
+'BEGIN',
+'    l_selected := apex_string.split(:p7_members,'':'');',
+'    FOR i IN 1..l_selected.count LOOP',
+'        INSERT INTO d_user_details ( usr_det_id,group_id,user_id ) VALUES (',
+'            usr_det_id_seq.NEXTVAL,',
+'            :p7_group_id,',
+'            l_selected(i)',
+'        );',
+'',
+'    END LOOP;',
+'',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>17970117516904204740
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970117614649204741)
+,p_process_sequence=>20
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_attribute_02=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>17970117614649204741
 );
 end;
 /

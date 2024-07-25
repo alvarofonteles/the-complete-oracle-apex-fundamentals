@@ -47,10 +47,11 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(17970114704884204712)
 ,p_plug_name=>'Button Footer'
+,p_parent_plug_id=>wwv_flow_imp.id(17970113701993204702)
 ,p_region_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_imp.id(35813808758363886820)
 ,p_plug_display_sequence=>20
-,p_plug_display_point=>'REGION_POSITION_03'
+,p_plug_display_point=>'SUB_REGIONS'
 ,p_location=>null
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'expand_shortcuts', 'N',
@@ -58,7 +59,7 @@ wwv_flow_imp_page.create_page_plug(
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(17970114812312204713)
-,p_button_sequence=>10
+,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_imp.id(17970114704884204712)
 ,p_button_name=>'ADD_EXPENSE'
 ,p_button_action=>'SUBMIT'
@@ -69,6 +70,20 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_position=>'CREATE'
 ,p_button_condition=>'P4_EXPENSE_ID'
 ,p_button_condition_type=>'ITEM_IS_NULL'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970118349647204748)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(17970114704884204712)
+,p_button_name=>'UPDATE_EXPENSE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Update Expense'
+,p_button_position=>'EDIT'
+,p_button_condition=>'P4_EXPENSE_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(15764888194837371303)
@@ -207,7 +222,29 @@ wwv_flow_imp_page.create_page_item(
 ,p_is_required=>true
 ,p_item_sequence=>50
 ,p_item_plug_id=>wwv_flow_imp.id(17970113701993204702)
+,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Payer'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'IF',
+'    :p4_expense_id IS NOT NULL',
+'THEN',
+'    SELECT',
+'        lending_user_id',
+'    INTO',
+'        :p4_payer',
+'    FROM',
+'        d_amount_details',
+'    WHERE',
+'            expense_id = :p4_expense_id',
+'        AND',
+'            group_id = :p4_group_id;',
+'',
+'    RETURN :p4_payer;',
+'END IF;',
+'',
+'RETURN NULL;'))
+,p_source_type=>'FUNCTION_BODY'
+,p_source_language=>'PLSQL'
 ,p_display_as=>'NATIVE_SELECT_LIST'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
@@ -237,7 +274,29 @@ wwv_flow_imp_page.create_page_item(
 ,p_is_required=>true
 ,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_imp.id(17970113701993204702)
+,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Included Members'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'IF',
+'    :p4_expense_id IS NOT NULL',
+'THEN',
+'    SELECT',
+'        listagg(borrowing_user_id,'':'')',
+'    INTO',
+'        :p4_included_members',
+'    FROM',
+'        d_amount_details',
+'    WHERE',
+'            expense_id =:p4_expense_id',
+'        AND',
+'            group_id =:p4_group_id;',
+'',
+'    RETURN :p4_included_members;',
+'END IF;',
+'',
+'RETURN NULL;'))
+,p_source_type=>'FUNCTION_BODY'
+,p_source_language=>'PLSQL'
 ,p_display_as=>'NATIVE_POPUP_LOV'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
@@ -323,6 +382,69 @@ wwv_flow_imp_page.create_page_process(
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when_button_id=>wwv_flow_imp.id(17970114812312204713)
 ,p_internal_uid=>17970114900632204714
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970118400921204749)
+,p_process_sequence=>20
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Update Expense'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_selected   apex_t_varchar2;',
+'    l_count      NUMBER;',
+'BEGIN',
+'    UPDATE d_expenses',
+'        SET',
+'            expense_name =:p4_expense_name,',
+'            category =:p4_category,',
+'            amount =:p4_amount,',
+'            transaction_date =:p4_transaction_date,',
+'            notes =:p4_notes',
+'    WHERE',
+'        expense_id =:p4_expense_id;',
+'',
+'    l_selected := apex_string.split(:p4_included_members,'':'');',
+'    DELETE FROM d_amount_details WHERE',
+'        expense_id =:p4_expense_id;',
+'',
+'    l_count := l_selected.count;',
+'    FOR i IN 1..l_selected.count LOOP',
+'        INSERT INTO d_amount_details (',
+'            amt_det_id,',
+'            group_id,',
+'            expense_id,',
+'            borrowing_user_id,',
+'            borrowing_amount,',
+'            lending_user_id,',
+'            lending_amount',
+'        ) VALUES (',
+'            amt_det_id_seq.NEXTVAL,',
+'            :p4_group_id,',
+'            :p4_expense_id,',
+'            l_selected(i),',
+'            :p4_amount / l_count,',
+'            :p4_payer,',
+'            :p4_amount / l_count',
+'        );',
+'',
+'    END LOOP;',
+'',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_imp.id(17970118349647204748)
+,p_internal_uid=>17970118400921204749
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(17970118578727204750)
+,p_process_sequence=>30
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_attribute_02=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>17970118578727204750
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(17970113837902204703)

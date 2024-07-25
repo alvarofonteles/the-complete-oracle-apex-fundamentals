@@ -1,0 +1,20 @@
+----------------------------------------Chart-------------------------------------------------
+select
+    get_user_name(ad.borrowing_user_id) as user_name,
+    sum(ad.borrowing_amount) as spend_amount,
+case
+        when e.category = 'https://icons.iconarchive.com/icons/aha-soft/desktop-buffet/16/Steak-icon.png' then 'Food and Drink'
+        when e.category = 'https://icons.iconarchive.com/icons/apathae/chakram-2/16/Home-icon.png' then 'Home and Utilities'
+        when e.category = 'https://icons.iconarchive.com/icons/iconshow/transport/16/Sportscar-car-icon.png' then 'Transportation'
+        when e.category = 'https://icons.iconarchive.com/icons/wwalczyszyn/android-style-honeycomb/16/Music-icon.png' then 'Entertainment'
+        when e.category = 'https://icons.iconarchive.com/icons/awicons/vista-artistic/16/coin-add-icon.png' then 'Other'
+    end as category
+from
+    d_amount_details ad,
+    d_expenses e
+where
+    ad.expense_id = e.expense_id
+    and borrowing_user_id = (select user_id from d_users where user_name = :app_user)
+group by
+    e.category,
+    ad.borrowing_user_id;

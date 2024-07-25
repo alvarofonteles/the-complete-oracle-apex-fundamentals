@@ -31,20 +31,24 @@ WHERE
  ---------Source--------------
  
  --Payer
-SELECT
-    user_name AS d,
-    user_id AS r
-FROM
-    d_users
-WHERE
-    user_id IN (
-        SELECT
-            user_id
-        FROM
-            d_user_details
-        WHERE
-            group_id =:p4_group_id
-    );
+IF
+    :p4_expense_id IS NOT NULL
+THEN
+    SELECT
+        lending_user_id
+    INTO
+        :p4_payer
+    FROM
+        d_amount_details
+    WHERE
+            expense_id = :p4_expense_id
+        AND
+            group_id = :p4_group_id;
+
+    RETURN :p4_included_members;
+END IF;
+
+RETURN NULL;
 
 --Members Included
 IF
