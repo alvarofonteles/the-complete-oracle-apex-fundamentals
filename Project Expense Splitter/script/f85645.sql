@@ -33,15 +33,15 @@ prompt APPLICATION 85645 - Expense Splitter
 -- Application Export:
 --   Application:     85645
 --   Name:            Expense Splitter
---   Date and Time:   21:40 Thursday July 25, 2024
+--   Date and Time:   13:55 Wednesday July 31, 2024
 --   Exported By:     ALVAROFONTELES@HOTMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                     11
---       Items:                   27
+--     Pages:                     13
+--       Items:                   28
 --       Processes:               17
---       Regions:                 20
---       Buttons:                 13
+--       Regions:                 22
+--       Buttons:                 15
 --       Dynamic Actions:          5
 --     Shared Components:
 --       Logic:
@@ -17938,6 +17938,7 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'HOME'
 ,p_step_title=>'Expense Splitter'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>'img { padding-right:8px; }'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'13'
@@ -18000,8 +18001,20 @@ wwv_flow_imp_page.create_page_plug(
   'show_line_breaks', 'Y')).to_clob
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(33696288366276508378)
+ p_id=>wwv_flow_imp.id(18449030682254147417)
 ,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(33696288324677508377)
+,p_button_name=>'TOTAL_AMOUNT_SPENT'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_image_alt=>'Total Amout Spent'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:9:&SESSION.::&DEBUG.:::'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(33696288366276508378)
+,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_imp.id(33696288324677508377)
 ,p_button_name=>'NEW_GROUP'
 ,p_button_action=>'REDIRECT_PAGE'
@@ -18245,6 +18258,7 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'EXPENSE'
 ,p_step_title=>'Expense'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>'img { padding-right:8px; }'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'17'
@@ -18291,14 +18305,25 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_action=>'REDIRECT_PAGE'
 ,p_button_template_options=>'#DEFAULT#:t-Button--link'
 ,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
-,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'View Members'
 ,p_button_position=>'EDIT'
 ,p_button_redirect_url=>'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::P6_GROUP_ID,P6_GROUP_NAME:&P3_GROUP_ID.,&P3_GROUP_NAME.'
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(17970113669609204701)
+ p_id=>wwv_flow_imp.id(18449029716123147408)
 ,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
+,p_button_name=>'BALANCES'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_image_alt=>'Balances'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::P8_GROUP_ID:&P3_GROUP_ID.'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970113669609204701)
+,p_button_sequence=>30
 ,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
 ,p_button_name=>'ADD_EXPENSE'
 ,p_button_action=>'REDIRECT_PAGE'
@@ -18817,6 +18842,19 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'EXPENSE-VIEW'
 ,p_step_title=>'Expense View'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'  ',
+'  .ul-sql {',
+'    list-style-type: none;',
+'    padding: 0;',
+'    margin: 0;',
+'  }',
+'  ',
+'  .ul-sql .li-sql {',
+'    border: 1px solid #ddd;',
+'    margin-top: -1px; /* Prevent double borders */',
+'    padding: 12px;',
+'  }'))
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'10'
@@ -18886,7 +18924,7 @@ wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(17970116084847204725)
 ,p_plug_name=>'Split Details'
 ,p_parent_plug_id=>wwv_flow_imp.id(17970115866617204723)
-,p_region_template_options=>'#DEFAULT#:is-expanded:t-Region--noBorder:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:is-expanded:t-Region--stacked:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_imp.id(35813825093873886828)
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'SUB_REGIONS'
@@ -19227,6 +19265,614 @@ wwv_flow_imp_page.create_page_process(
 ,p_attribute_02=>'Y'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_internal_uid=>17970117614649204741
+);
+end;
+/
+prompt --application/pages/page_00008
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>8
+,p_name=>'Balance'
+,p_alias=>'BALANCE'
+,p_step_title=>'Balance'
+,p_autocomplete_on_off=>'OFF'
+,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'var acc = document.getElementsByClassName("accordion");',
+'var i;',
+'',
+'for (i = 0; i < acc.length; i++) {',
+'  acc[i].addEventListener("click", function() {',
+'    this.classList.toggle("active");',
+'    var panel = this.nextElementSibling;',
+'    if (panel.style.maxHeight) {',
+'      panel.style.maxHeight = null;',
+'    } else {',
+'      panel.style.maxHeight = panel.scrollHeight + "px";',
+'    } ',
+'  });',
+'}'))
+,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'.accordion {',
+'    background-color: #fcfbfa;',
+'    color: #444;',
+'    cursor: pointer;',
+'    padding: 18px;',
+'    width: 100%;',
+'    border: none;',
+'    text-align: left;',
+'    outline: none;',
+'    font-size: 15px;',
+'    transition: 0.4s;',
+'  }',
+'  ',
+'  .active, .accordion:hover {',
+'    background-color: #f4f4f4;',
+'  }',
+'  ',
+'  .panel {',
+'    padding: 0 18px;',
+'    background-color: white;',
+'    max-height: 0;',
+'    overflow: hidden;',
+'    transition: max-height 0.2s ease-out;',
+'  }',
+'  ',
+'  .ul-sql {',
+'    list-style-type: none;',
+'    padding: 0;',
+'    margin: 0;',
+'  }',
+'  ',
+'  .ul-sql .li-sql {',
+'    border: 1px solid #ddd;',
+'    margin-top: -1px; /* Prevent double borders */',
+'    padding: 12px;',
+'  }'))
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'10'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(18449029804899147409)
+,p_plug_name=>'Balances'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_imp.id(35813872844214886850)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_prompt_1            VARCHAR2(20);',
+'    l_prompt_2            VARCHAR2(20);',
+'    l_prompt_3            VARCHAR2(20);',
+'    l_prompt_4            VARCHAR2(20);',
+'    l_prompt_5            VARCHAR2(20);',
+'    l_individual_amount   NUMBER(12,2);',
+'    l_shared_amount       NUMBER(12,2);',
+'---Individual Balance',
+'    CURSOR c_individual_balance IS',
+'        SELECT',
+'            borrowing_user_id AS user_id,',
+'            ( lending_amount - borrowing_amount ) AS amount',
+'        FROM',
+'            (',
+'                SELECT',
+'                    borrowing_user_id,',
+'                    SUM(borrowing_amount) AS borrowing_amount',
+'                FROM',
+'                    d_amount_details',
+'                WHERE',
+'                        group_id =:p8_group_id',
+'                    AND',
+'                        borrowing_user_id <> lending_user_id',
+'                    AND',
+'                        lending_user_id IN (',
+'                            SELECT',
+'                                user_id',
+'                            FROM',
+'                                d_user_details',
+'                            WHERE',
+'                                group_id =:p8_group_id',
+'                        )',
+'                GROUP BY',
+'                    borrowing_user_id',
+'                UNION',
+'                SELECT',
+'                    user_id AS borrowing_user_id,',
+'                    0 AS borrowing_amount',
+'                FROM',
+'                    d_user_details',
+'                WHERE',
+'                        user_id NOT IN (',
+'                            SELECT',
+'                                borrowing_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    borrowing_user_id <> lending_user_id',
+'                                AND',
+'                                    borrowing_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'                    AND',
+'                        group_id =:p8_group_id',
+'            ),',
+'            (',
+'                SELECT',
+'                    lending_user_id,',
+'                    SUM(lending_amount) AS lending_amount',
+'                FROM',
+'                    d_amount_details',
+'                WHERE',
+'                        group_id =:p8_group_id',
+'                    AND',
+'                        lending_user_id <> borrowing_user_id',
+'                    AND',
+'                        borrowing_user_id IN (',
+'                            SELECT',
+'                                user_id',
+'                            FROM',
+'                                d_user_details',
+'                            WHERE',
+'                                group_id =:p8_group_id',
+'                        )',
+'                GROUP BY',
+'                    lending_user_id',
+'                UNION',
+'                SELECT',
+'                    user_id AS lending_user_id,',
+'                    0 AS lending_amount',
+'                FROM',
+'                    d_user_details',
+'                WHERE',
+'                        user_id NOT IN (',
+'                            SELECT',
+'                                lending_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    lending_user_id <> borrowing_user_id',
+'                                AND',
+'                                    lending_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'                    AND',
+'                        group_id =:p8_group_id',
+'            )',
+'        WHERE',
+'            borrowing_user_id = lending_user_id;',
+'',
+'---Shared Balance',
+'',
+'    CURSOR c_shared_balance ( p_user_id NUMBER ) IS',
+'        SELECT',
+'            b.borrowing_user_id AS user_id_1,',
+'            ( l.lending_amount - b.borrowing_amount ) AS amount,',
+'            b.lending_user_id AS user_id_2',
+'        FROM',
+'            (',
+'                SELECT',
+'                    borrowing_user_id,',
+'                    SUM(borrowing_amount) AS borrowing_amount,',
+'                    lending_user_id',
+'                FROM',
+'                    d_amount_details',
+'                WHERE',
+'                        group_id =:p8_group_id',
+'                    AND',
+'                        borrowing_user_id <> lending_user_id',
+'                    AND',
+'                        lending_user_id IN (',
+'                            SELECT',
+'                                user_id',
+'                            FROM',
+'                                d_user_details',
+'                            WHERE',
+'                                group_id =:p8_group_id',
+'                        )',
+'                GROUP BY',
+'                    borrowing_user_id,',
+'                    lending_user_id',
+'                UNION',
+'                SELECT',
+'                    b.user_id AS borrowing_user_id,',
+'                    0 AS borrowing_amount,',
+'                    l.user_id AS lending_user_id',
+'                FROM',
+'                    d_user_details b,',
+'                    d_user_details l',
+'                WHERE',
+'                        b.user_id <> l.user_id',
+'                    AND',
+'                        b.group_id =:p8_group_id',
+'                    AND',
+'                        l.group_id =:p8_group_id',
+'                    AND',
+'                        b.user_id NOT IN (',
+'                            SELECT',
+'                                borrowing_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    borrowing_user_id <> lending_user_id',
+'                                AND',
+'                                    borrowing_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'                UNION',
+'                SELECT',
+'                    b.user_id AS borrowing_user_id,',
+'                    0 AS borrowing_amount,',
+'                    l.user_id AS lending_user_id',
+'                FROM',
+'                    d_user_details b,',
+'                    d_user_details l',
+'                WHERE',
+'                        b.user_id <> l.user_id',
+'                    AND',
+'                        b.group_id =:p8_group_id',
+'                    AND',
+'                        l.group_id =:p8_group_id',
+'                    AND',
+'                        b.group_id =:p8_group_id',
+'                    AND',
+'                        l.user_id NOT IN (',
+'                            SELECT',
+'                                lending_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    borrowing_user_id <> lending_user_id',
+'                                AND',
+'                                    borrowing_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'            ) b,',
+'            (',
+'                SELECT',
+'                    lending_user_id,',
+'                    SUM(lending_amount) AS lending_amount,',
+'                    borrowing_user_id',
+'                FROM',
+'                    d_amount_details',
+'                WHERE',
+'                        group_id =:p8_group_id',
+'                    AND',
+'                        lending_user_id <> borrowing_user_id',
+'                    AND',
+'                        borrowing_user_id IN (',
+'                            SELECT',
+'                                user_id',
+'                            FROM',
+'                                d_user_details',
+'                            WHERE',
+'                                group_id =:p8_group_id',
+'                        )',
+'                GROUP BY',
+'                    lending_user_id,',
+'                    borrowing_user_id',
+'                UNION',
+'                SELECT',
+'                    l.user_id AS lending_user_id,',
+'                    0 AS lending_amount,',
+'                    b.user_id AS borrowing_user_id',
+'                FROM',
+'                    d_user_details l,',
+'                    d_user_details b',
+'                WHERE',
+'                        l.user_id <> b.user_id',
+'                    AND',
+'                        l.group_id =:p8_group_id',
+'                    AND',
+'                        b.group_id =:p8_group_id',
+'                    AND',
+'                        l.user_id NOT IN (',
+'                            SELECT',
+'                                lending_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    lending_user_id <> borrowing_user_id',
+'                                AND',
+'                                    lending_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'                UNION',
+'                SELECT',
+'                    l.user_id AS lending_user_id,',
+'                    0 AS lending_amount,',
+'                    b.user_id AS borrowing_user_idborrowing_user_id',
+'                FROM',
+'                    d_user_details l,',
+'                    d_user_details b',
+'                WHERE',
+'                        l.user_id <> b.user_id',
+'                    AND',
+'                        l.group_id =:p8_group_id',
+'                    AND',
+'                        b.user_id NOT IN (',
+'                            SELECT',
+'                                borrowing_user_id',
+'                            FROM',
+'                                d_amount_details',
+'                            WHERE',
+'                                    group_id =:p8_group_id',
+'                                AND',
+'                                    lending_user_id <> borrowing_user_id',
+'                                AND',
+'                                    lending_user_id IN (',
+'                                        SELECT',
+'                                            user_id',
+'                                        FROM',
+'                                            d_user_details',
+'                                        WHERE',
+'                                            group_id =:p8_group_id',
+'                                    )',
+'                        )',
+'            ) l',
+'        WHERE',
+'                b.lending_user_id = l.borrowing_user_id',
+'            AND',
+'                b.borrowing_user_id = l.lending_user_id',
+'            AND',
+'                b.borrowing_user_id = p_user_id;',
+'',
+'BEGIN',
+'    FOR r_individual_balance IN c_individual_balance LOOP',
+'        IF',
+'            r_individual_balance.amount > 0',
+'        THEN',
+'            l_prompt_1 := '' gets back '';',
+'        ELSIF r_individual_balance.amount < 0 THEN',
+'            l_prompt_1 := '' owes '';',
+'        ELSE',
+'            l_prompt_1 := '''';',
+'        END IF;',
+'',
+'        IF',
+'            r_individual_balance.amount <> 0',
+'        THEN',
+'            l_prompt_2 := '' in total'';',
+'        ELSE',
+'            l_prompt_2 := '' is settled up'';',
+'        END IF;',
+'',
+'        IF',
+'            r_individual_balance.amount <> 0',
+'        THEN',
+'            l_individual_amount := abs(r_individual_balance.amount);',
+'        ELSE',
+'            l_individual_amount := '''';',
+'        END IF;',
+'',
+'        htp.p(''<button type ="button" class="accordion"><strong>''',
+'         || get_user_name(r_individual_balance.user_id)',
+'         || ''</strong>''',
+'         || l_prompt_1',
+'         || ''<strong>''',
+'         || l_individual_amount',
+'         || ''</strong>''',
+'         || l_prompt_2',
+'         || ''</button>'');',
+'',
+'        htp.p(''<ul class="panel ul-sql">'');',
+'        FOR r_shared_balance IN c_shared_balance(r_individual_balance.user_id) LOOP',
+'            IF',
+'                r_shared_balance.amount > 0',
+'            THEN',
+'                l_prompt_3 := '' gets back '';',
+'            ELSIF r_shared_balance.amount < 0 THEN',
+'                l_prompt_3 := '' owes '';',
+'            ELSE',
+'                l_prompt_3 := '''';',
+'            END IF;',
+'',
+'            IF',
+'                r_shared_balance.amount > 0',
+'            THEN',
+'                l_prompt_4 := '' from '';',
+'            ELSIF r_shared_balance.amount < 0 THEN',
+'                l_prompt_4 := '' to '';',
+'            ELSE',
+'                l_prompt_4 := '''';',
+'            END IF;',
+'',
+'            IF',
+'                r_shared_balance.amount <> 0',
+'            THEN',
+'                l_prompt_5 := '' in total'';',
+'            ELSE',
+'                l_prompt_5 := '' is settled up'';',
+'            END IF;',
+'',
+'            IF',
+'                r_shared_balance.amount <> 0',
+'            THEN',
+'                l_shared_amount := abs(r_shared_balance.amount);',
+'            ELSE',
+'                l_shared_amount := '''';',
+'            END IF;',
+'',
+'            IF',
+'                l_shared_amount IS NOT NULL',
+'            THEN',
+'                htp.p(''<li class="li-sql"><strong>''',
+'                 || get_user_name(r_shared_balance.user_id_1)',
+'                 || ''</strong>''',
+'                 || l_prompt_3',
+'                 || ''<strong>''',
+'                 || l_shared_amount',
+'                 || ''</strong>''',
+'                 || l_prompt_4',
+'                 || ''<strong>''',
+'                 || get_user_name(r_shared_balance.user_id_2)',
+'                 || ''</strong>''',
+'                 || l_prompt_5',
+'                 || ''</li>'');',
+'            END IF;',
+'',
+'        END LOOP;',
+'',
+'        htp.p(''</ul>'');',
+'    END LOOP;',
+'END;'))
+,p_plug_source_type=>'NATIVE_PLSQL'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(18449029999404147410)
+,p_name=>'P8_GROUP_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(18449029804899147409)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
+end;
+/
+prompt --application/pages/page_00009
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>9
+,p_name=>'Total Amount Spent'
+,p_alias=>'TOTAL-AMOUNT-SPENT'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Charts'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'04'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(18449030759682147418)
+,p_plug_name=>'Charts'
+,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader js-removeLandmark:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>wwv_flow_imp.id(35813872844214886850)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_imp_page.create_jet_chart(
+ p_id=>wwv_flow_imp.id(18449030838724147419)
+,p_region_id=>wwv_flow_imp.id(18449030759682147418)
+,p_chart_type=>'bar'
+,p_title=>'&APP_USER.'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_orientation=>'vertical'
+,p_data_cursor=>'auto'
+,p_data_cursor_behavior=>'auto'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_connect_nulls=>'Y'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_zoom_and_scroll=>'off'
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_legend_rendered=>'off'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(18449030933289147420)
+,p_chart_id=>wwv_flow_imp.id(18449030838724147419)
+,p_seq=>10
+,p_name=>'New'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select',
+'    get_user_name(ad.borrowing_user_id) as user_name,',
+'    sum(ad.borrowing_amount) as spend_amount,',
+'case',
+'        when e.category = ''https://icons.iconarchive.com/icons/aha-soft/desktop-buffet/16/Steak-icon.png'' then ''Food and Drink''',
+'        when e.category = ''https://icons.iconarchive.com/icons/apathae/chakram-2/16/Home-icon.png'' then ''Home and Utilities''',
+'        when e.category = ''https://icons.iconarchive.com/icons/iconshow/transport/16/Sportscar-car-icon.png'' then ''Transportation''',
+'        when e.category = ''https://icons.iconarchive.com/icons/wwalczyszyn/android-style-honeycomb/16/Music-icon.png'' then ''Entertainment''',
+'        when e.category = ''https://icons.iconarchive.com/icons/awicons/vista-artistic/16/coin-add-icon.png'' then ''Other''',
+'    end as category',
+'from',
+'    d_amount_details ad,',
+'    d_expenses e',
+'where',
+'    ad.expense_id = e.expense_id',
+'    and borrowing_user_id = (select user_id from d_users where user_name = :app_user)',
+'group by',
+'    e.category,',
+'    ad.borrowing_user_id;'))
+,p_items_value_column_name=>'SPEND_AMOUNT'
+,p_items_label_column_name=>'CATEGORY'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(18449031071267147421)
+,p_chart_id=>wwv_flow_imp.id(18449030838724147419)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_tick_label_rotation=>'auto'
+,p_tick_label_position=>'outside'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(18449031137645147422)
+,p_chart_id=>wwv_flow_imp.id(18449030838724147419)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_type=>'decimal'
+,p_decimal_places=>0
+,p_format_scaling=>'none'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
 );
 end;
 /

@@ -17,6 +17,7 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'EXPENSE'
 ,p_step_title=>'Expense'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>'img { padding-right:8px; }'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'17'
@@ -63,14 +64,25 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_action=>'REDIRECT_PAGE'
 ,p_button_template_options=>'#DEFAULT#:t-Button--link'
 ,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
-,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'View Members'
 ,p_button_position=>'EDIT'
 ,p_button_redirect_url=>'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::P6_GROUP_ID,P6_GROUP_NAME:&P3_GROUP_ID.,&P3_GROUP_NAME.'
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(17970113669609204701)
+ p_id=>wwv_flow_imp.id(18449029716123147408)
 ,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
+,p_button_name=>'BALANCES'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(35813946804999886888)
+,p_button_image_alt=>'Balances'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::P8_GROUP_ID:&P3_GROUP_ID.'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(17970113669609204701)
+,p_button_sequence=>30
 ,p_button_plug_id=>wwv_flow_imp.id(15731090400390181947)
 ,p_button_name=>'ADD_EXPENSE'
 ,p_button_action=>'REDIRECT_PAGE'

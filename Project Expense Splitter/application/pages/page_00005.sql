@@ -17,6 +17,19 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'EXPENSE-VIEW'
 ,p_step_title=>'Expense View'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'  ',
+'  .ul-sql {',
+'    list-style-type: none;',
+'    padding: 0;',
+'    margin: 0;',
+'  }',
+'  ',
+'  .ul-sql .li-sql {',
+'    border: 1px solid #ddd;',
+'    margin-top: -1px; /* Prevent double borders */',
+'    padding: 12px;',
+'  }'))
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'10'
@@ -86,7 +99,7 @@ wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(17970116084847204725)
 ,p_plug_name=>'Split Details'
 ,p_parent_plug_id=>wwv_flow_imp.id(17970115866617204723)
-,p_region_template_options=>'#DEFAULT#:is-expanded:t-Region--noBorder:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:is-expanded:t-Region--stacked:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_imp.id(35813825093873886828)
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'SUB_REGIONS'
